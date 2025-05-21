@@ -25,7 +25,7 @@ WORKDIR /app/cmd
 RUN CGO_ENABLED=1 go build -o /go/bin/app
 
 # ---------- STAGE 2: Runtime ----------
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
 
 RUN apt-get update && apt-get install -y sqlite3 ca-certificates && rm -rf /var/lib/apt/lists/*
 
