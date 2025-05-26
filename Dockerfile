@@ -9,7 +9,7 @@ WORKDIR /app
 COPY go.mod go.sum ./
 
 # Download Go module dependencies (cached zolang go.mod en go.sum niet veranderen)
-RUN go mod download
+RUN go mod tidy && go mod download
 
 # Installeer templ tool (ook gecachet)
 RUN go install github.com/a-h/templ/cmd/templ@latest
