@@ -205,7 +205,7 @@ func (th *TaskHandler) deleteTodoHandler(c echo.Context) error {
 		return echo.NewHTTPError(
 			echo.ErrInternalServerError.Code,
 			fmt.Sprintf(
-				"something went wrong very bad: %s",
+				"something went wrong very bad, so that is not nice: %s",
 				err,
 			))
 	}
@@ -226,7 +226,7 @@ func (th *TaskHandler) logoutHandler(c echo.Context) error {
 	}
 	sess.Save(c.Request(), c.Response())
 
-	setFlashmessages(c, "success", "You have successfully logged out!!")
+	setFlashmessages(c, "success", "You have successfully logged out, so that's good!!")
 
 	// fromProtected = false
 	c.Set("FROMPROTECTED", false)
