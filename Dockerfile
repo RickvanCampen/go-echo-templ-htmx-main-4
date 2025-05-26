@@ -1,32 +1,31 @@
 # ---------- STAGE 1: Builder ----------
 FROM golang:1.24 AS builder
 
-RUN apt-get update && apt-get install -y git sqlite3 ca-certificates
+# Alleen wat nodig is voor de build
+RUN apt-get update && apt-get install -y git ca-certificates && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
-# Kopieer alleen go.mod en go.sum (voor cache)
+# Alleen dependency files kopiëren voor cache
 COPY go.mod go.sum ./
-
-# Download Go module dependencies (cached zolang go.mod en go.sum niet veranderen)
 RUN go mod download
 
-# Installeer templ tool (ook gecachet)
-RUN go install github.com/a-h/templ/cmd/templ@latest
+# Installeer specifieke templ versie
+RUN go install github.com/a-h/templ/cmd/templ@v0.2.584
 
-# Nu de rest van de app code kopiëren
+# Rest van de app kopiëren
 COPY . .
 
 # Genereer templ-code
 RUN /go/bin/templ generate
 
-# Build de app met CGO enabled (vereist voor go-sqlite3)
-WORKDIR /app/cmd
-RUN CGO_ENABLED=1 go build -o /go/bin/app
+# Build direct met target-dir
+RUN CGO_ENABLED=1 go build -o /go/bin/app ./cmd
 
 # ---------- STAGE 2: Runtime ----------
 FROM debian:bookworm-slim
 
+# Alleen wat runtime nodig heeft
 RUN apt-get update && apt-get install -y sqlite3 ca-certificates && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /root/

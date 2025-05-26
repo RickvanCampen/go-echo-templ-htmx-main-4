@@ -14,11 +14,6 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Maak Go cache directories aan
-      run: |
-        mkdir -p ~/.cache/go-build
-        mkdir -p ~/go/pkg/mod
-
     - name: Cache Go modules
       uses: actions/cache@v3
       with:
@@ -45,7 +40,7 @@ jobs:
     - name: Build and Push Docker image
       uses: docker/build-push-action@v4
       with:
-        platforms: linux/amd64,linux/arm64
+        platforms: linux/amd64  # alleen amd64 voor snellere build
         push: true
         tags: |
           ghcr.io/${{ steps.lowercase.outputs.reponame }}:latest
