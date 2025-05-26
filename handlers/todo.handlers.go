@@ -226,7 +226,7 @@ func (th *TaskHandler) logoutHandler(c echo.Context) error {
 	}
 	sess.Save(c.Request(), c.Response())
 
-	setFlashmessages(c, "success", "You have successfully logged out, very good!!")
+	setFlashmessages(c, "success", "You have successfully logged out!!")
 
 	// fromProtected = false
 	c.Set("FROMPROTECTED", false)
