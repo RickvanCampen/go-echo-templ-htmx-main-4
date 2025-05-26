@@ -11,7 +11,7 @@ COPY go.mod go.sum ./
 RUN go mod download
 
 # Installeer specifieke templ versie
-RUN go install github.com/a-h/templ@latest
+RUN go install github.com/a-h/templ/cmd/templ@latest
 
 # Rest van de app kopiëren
 COPY . .
