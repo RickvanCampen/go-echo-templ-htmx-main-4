@@ -210,7 +210,7 @@ func (th *TaskHandler) deleteTodoHandler(c echo.Context) error {
 			))
 	}
 
-	setFlashmessages(c, "success", "Task successfully deleted!!")
+	setFlashmessages(c, "success", "Task is successfully deleted!!")
 
 	return c.Redirect(http.StatusSeeOther, "/todo/list")
 }
