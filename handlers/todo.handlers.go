@@ -205,12 +205,12 @@ func (th *TaskHandler) deleteTodoHandler(c echo.Context) error {
 		return echo.NewHTTPError(
 			echo.ErrInternalServerError.Code,
 			fmt.Sprintf(
-				"something went wrong: %s",
+				"something went wrong very bad: %s",
 				err,
 			))
 	}
 
-	setFlashmessages(c, "success", "Task is successfully deleted!!")
+	setFlashmessages(c, "success", "Task successfully deleted!!")
 
 	return c.Redirect(http.StatusSeeOther, "/todo/list")
 }
