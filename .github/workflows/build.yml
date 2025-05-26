@@ -25,8 +25,16 @@ jobs:
         path: |
           ~/.cache/go-build
           ~/go/pkg/mod
+          ~/go/pkg/mod/cache
         key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
         restore-keys: ${{ runner.os }}-go-
+
+    - name: Set Go environment variables
+      run: |
+        go env -w GOPROXY=https://proxy.golang.org,direct
+
+    - name: Download Go modules
+      run: go mod download
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
